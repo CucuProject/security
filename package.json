@@ -1,0 +1,34 @@
+{
+  "name": "@cucu/security",
+  "version": "1.0.0",
+  "description": "Security utilities for Cucu microservices — HMAC verification, federation JWT signing & verification",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prebuild": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@nestjs/common": {
+      "optional": true
+    },
+    "@nestjs/config": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@nestjs/common": "^11.1.16",
+    "@nestjs/config": "^4.0.3",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.4"
+  }
+}
