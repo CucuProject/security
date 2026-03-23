@@ -108,10 +108,22 @@ describe('FederationTokenService', () => {
     const configService = makeMockConfigService();
     const service = new FederationTokenService(configService as any);
 
+    // Pin Date.now so the first call uses a known time
+    const baseTime = Date.now();
+    const dateNowSpy = jest.spyOn(Date, 'now');
+    dateNowSpy.mockReturnValue(baseTime);
+
     const token1 = await service.getToken();
+
+    // Advance by 2 seconds — still well within cache window,
+    // but iat would differ if a new token were signed (floor division changes).
+    // If caching is broken, sign() would use a different iat → different JWT.
+    dateNowSpy.mockReturnValue(baseTime + 2_000);
+
     const token2 = await service.getToken();
 
     expect(token1).toBe(token2);
+    dateNowSpy.mockRestore();
   });
 
   it('should regenerate the token when < 10s from expiry', async () => {
